@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Checkout</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script defer src="checkout.js"></script>
+</head>
+<body>
+<div id="app" class="checkout-page">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-section">
+      <div class="logo">LTG</div>
+      <div>
+        <h2>Checkout</h2>
+        <p class="subtitle">Complete your purchase</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main-grid checkout-main" v-if="!submitted">
+    <!-- Cart Summary -->
+    <section class="card checkout-card">
+      <h3>Your Cart</h3>
+      <ul>
+        <li v-for="item in cart" :key="item.id" class="checkout-item">
+          <img :src="item.image" alt="Course Image">
+          <div class="checkout-item-info">
+            <span class="checkout-item-title">{{ item.title }}</span>
+            <span class="checkout-item-price">£{{ item.price.toFixed(2) }}</span>
+          </div>
+        </li>
+      </ul>
+      <p class="cart-subtotal"><strong>Subtotal:</strong> £{{ subtotal.toFixed(2) }}</p>
+    </section>
+
+    <!-- Payment Form -->
+    <section class="card checkout-card">
+      <h3>Payment Details</h3>
+      <form @submit.prevent="submitOrder" class="checkout-form">
+        <label>Name</label>
+        <input v-model="order.name" required>
+
+        <label>Email</label>
+        <input v-model="order.email" type="email" required>
+
+        <label>Phone Number</label>
+        <input v-model="order.phonenum" type="tel" required>
+
+        <label>Card Number</label>
+        <input v-model="order.cardNumber" required maxlength="16" placeholder="1234 5678 9012 3456">
+
+        <label>Expiry Date</label>
+        <input v-model="order.expiry" placeholder="MM/YY" required>
+
+        <label>CVV</label>
+        <input v-model="order.cvv" maxlength="3" required>
+
+        <div class="checkout-buttons"> <button type="submit" class="btn-primary btn-full" :disabled="!isFormValid" > Confirm Payment </button>
+        <button type="button" @click="goBack" class="btn-secondary btn-full" > Cancel </button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Confirmation -->
+  <div v-if="submitted" class="confirmation card">
+    <h3>✅ Payment Successful!</h3>
+    <p>Thank you, {{ order.name }}. Your order has been placed.</p>
+    <button class="btn-primary" @click="goHome">Back to Home</button>
+  </div>
+
+</div>
+</body>
+</html>

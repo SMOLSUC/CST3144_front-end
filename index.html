@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Learn to Code — Fun 5-Lesson Mini Courses</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+<div id="app">
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-section">
+      <div class="logo">LTG</div>
+      <div>
+        <h2>Learn to Code — 5-Lesson Mini Courses</h2>
+        <p class="subtitle">Friendly, bite-sized projects — perfect for beginners.</p>
+      </div>
+    </div>
+    <div class="search-cart">
+      <input v-model="search" type="search" placeholder="Search courses..." class="search-input">
+      <select v-model="categoryFilter" class="category-select">
+        <option value="">All</option>
+        <option v-for="c in categories" :key="c">{{ c }}</option>
+      </select>
+      <button @click="openCart=true" class="cart-btn">
+        🛒 Cart
+        <span v-if="cartCount" class="cart-count">{{ cartCount }}</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main-grid">
+    <section class="courses-section">
+      <article v-for="course in filteredCourses" :key="course.id" class="card">
+        <div class="card-image">
+          <img :src="course.image" alt="">
+        </div>
+        <h3>{{ course.title }}</h3>
+        <p class="course-subtitle">{{ course.subtitle }}</p>
+        <div class="course-meta">{{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
+        <!--<div class="course-meta">{{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
+        <div class="lessons-list">
+          <div v-for="(l,idx) in course.lessons" :key="idx">
+            <span :class="['lesson-dot', l.access ? 'lesson-access' : 'lesson-locked']"></span>
+            {{ idx+1 }}. {{ l.title }}
+          </div>
+        </div>
+        -->
+        <div class="card-footer">
+          <div class="price">£{{ course.price.toFixed(2) }}</div>
+          <div class="card-buttons">
+            <button @click="preview(course)" class="btn-secondary">Preview</button>
+            <button @click="addToCart(course)" class="btn-primary">Add</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <aside class="sidebar">
+      <div class="card">
+        <h4>Why these courses?</h4>
+        <ul>
+          <li>Fun, short projects</li>
+          <li>No jargon, clear examples</li>
+          <li>Build something every lesson</li>
+        </ul>
+      </div>
+      <div class="card" v-if="featured">
+        <h4>Featured: {{ featured.title }}</h4>
+        <div class="featured-item">
+          <img :src="featured.image" alt="">
+          <div>
+            <div class="featured-title">{{ featured.title }}</div>
+            <div class="featured-price">£{{ featured.price.toFixed(2) }}</div>
+          </div>
+        </div>
+        <button @click="addToCart(featured)" class="btn-primary btn-full">Buy now</button>
+      </div>
+      <div class="card">
+        <h4>Filter by Level</h4>
+        <div class="level-filter">
+          <button @click="levelFilter=''" :class="levelFilter===''?'active-filter':''">All</button>
+          <button @click="levelFilter='Beginner'" :class="levelFilter==='Beginner'?'active-filter':''">Beginner</button>
+          <button @click="levelFilter='Intermediate'" :class="levelFilter==='Intermediate'?'active-filter':''">Intermediate</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Preview modal -->
+  <div v-if="previewCourse" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>{{ previewCourse.title }}</h3>
+        <button @click="previewCourse=null">✕</button>
+      </div>
+      <div class="modal-image">
+        <img :src="previewCourse.preview" alt="preview image">
+      </div>
+      <p>{{ previewCourse.projectOutcome }}</p>
+      <button @click="addToCart(previewCourse)" class="btn-primary btn-full">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Cart modal -->
+  <div v-if="openCart" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Your Cart</h3>
+        <button @click="openCart=false">✕</button>
+      </div>
+      <div v-if="cart.length" class="cart-items">
+        <div v-for="(item, idx) in cart" :key="item.id" class="cart-item">
+          <div class="cart-item-info">
+            <img :src="item.image" alt="">
+            <div>
+              <div>{{ item.title }}</div>
+              <div class="item-subtitle">{{ item.subtitle }}</div>
+            </div>
+          </div>
+          <div>
+            <div class="price">£{{ item.price.toFixed(2) }}</div>
+            <button @click="removeFromCart(idx)" class="remove-btn">Remove</button>
+          </div>
+        </div>
+        <div class="cart-subtotal">
+          <div>Subtotal</div>
+          <div>£{{ subtotal.toFixed(2) }}</div>
+        </div>
+        <button @click="checkout" class="btn-primary btn-full">Checkout</button>
+      </div>
+      <div v-else class="empty-cart">Your cart is empty.</div>
+    </div>
+  </div>
+
+  <div v-if="toast" class="toast">{{ toast }}</div>
+
+  <!-- Page Footer-->
+  <footer>
+  <div class="footer-container">
+    <div class="footer-column">
+      <h4>Contact Us</h4>
+      <p>123 Main Street, Anytown, USA</p>
+      <p>Email: <a href="mailto:contact@example.com">contact@example.com</a></p>
+      <p>Phone: (123) 456-7890</p>
+    </div>
+    <div class="footer-column">
+      <h4>Follow Us</h4>
+      <a href="https://facebook.com/yourpage">Facebook</a>
+      <a href="https://twitter.com/yourhandle">Twitter</a>
+      <a href="https://instagram.com/yourprofile">Instagram</a>
+    </div>
+    <div class="footer-column">
+      <h4>Quick Links</h4>
+      <a href="/about">About Us</a>
+      <a href="/services">Services</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-column">
+      <h4>Legal</h4>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+    </div>
+  </div>
+  <p>&copy; <span id="year"></span> Learn To Code. All rights reserved.</p>
+</footer>   
+</div>
+
+<script>
+const { createApp, ref, reactive, computed, onMounted } = Vue;
+createApp({
+  setup() {
+    const search = ref('');
+    const categoryFilter = ref('');
+    const levelFilter = ref('');
+    const openCart = ref(false);
+    const previewCourse = ref(null);
+    const toast = ref('');
+    const courses = ref([]);
+    const cart = ref(JSON.parse(localStorage.getItem('cart')||'[]'));
+
+    const fetchCourses = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/api/lessons');
+        const data = await res.json();
+        courses.value = data.map(lesson => ({
+          id: lesson._id,
+          title: lesson.topic,
+          subtitle: `Location: ${lesson.location}`,
+          price: lesson.price,
+          duration: lesson.duration,
+          level: lesson.level,
+          category: 'General',
+          image: lesson.image, 
+          preview: lesson.preview,
+          projectOutcome: lesson.preview,
+          spaces: lesson.space,
+          lessons: Array.from({length: lesson.space}, (_, i) => ({title: `Lesson ${i+1}`, access: false})),
+        }));
+      } catch(err){ console.error(err); }
+    };
+
+    onMounted(fetchCourses);
+
+    const categories = computed(()=>[...new Set(courses.value.map(c=>c.category))]);
+    const featured = computed(()=>courses.value[0]||{title:'',price:0,image:''});
+    const filteredCourses = computed(()=>courses.value.filter(c=>{
+      const q=(c.title+' '+c.subtitle).toLowerCase();
+      return (!search.value||q.includes(search.value.toLowerCase()))
+        &&(!categoryFilter.value||c.category===categoryFilter.value)
+        &&(!levelFilter.value||c.level===levelFilter.value);
+    }));
+    const cartCount = computed(()=>cart.value.length);
+    const subtotal = computed(()=>cart.value.reduce((s,i)=>s+i.price,0));
+
+    function addToCart(course) {
+      const existing = cart.value.find(i => i.id === course.id);
+      if (existing) {
+        showToast('Already in cart');
+        return;
+      }
+
+      // 1️⃣ Add to cart
+      cart.value.push(course);
+      localStorage.setItem('cart', JSON.stringify(cart.value));
+
+      // 2️⃣ Temporarily decrease space (frontend only)
+      const targetCourse = courses.value.find(c => c.id === course.id);
+      if (targetCourse && targetCourse.spaces > 0) {
+        targetCourse.spaces -= 1;
+      }
+
+      // 3️⃣ Show toast
+      showToast('Added to cart');
+    }
+
+    
+    function removeFromCart(index) {
+      const removed = cart.value.splice(index, 1)[0];
+      localStorage.setItem('cart', JSON.stringify(cart.value));
+
+      const targetCourse = courses.value.find(c => c.id === removed.id);
+      if (targetCourse) targetCourse.spaces += 1;
+    }
+
+    function checkout(){ localStorage.setItem('cart', JSON.stringify(cart.value.map(i => ({ id: i.id, title: i.title, price: i.price, image:i.image })))); window.location.href = 'checkout.html'; }
+    function preview(c){previewCourse.value=c;}
+    function showToast(msg){toast.value=msg; setTimeout(()=>toast.value='',1800);}
+
+    return {search,categoryFilter,levelFilter,categories,filteredCourses,featured,cart,cartCount,subtotal,addToCart,removeFromCart,checkout,openCart,previewCourse,preview,toast};
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
