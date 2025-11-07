@@ -381,3 +381,10 @@ footer {
   cursor: not-allowed;
 }
 
+.header-cart-btn:disabled {
+  background-color: #ffffff !important; /* Keep it light */
+  color: #ffffff !important;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+

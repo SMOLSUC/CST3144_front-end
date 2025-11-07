@@ -24,7 +24,10 @@
         <option value="">All</option>
         <option v-for="c in categories" :key="c">{{ c }}</option>
       </select>
-      <button @click="openCart=true" class="cart-btn">
+      <button 
+        @click="openCart=true" 
+        class="cart-btn header-cart-btn"
+        :disabled="!cartCount" >
         🛒 Cart
         <span v-if="cartCount" class="cart-count">{{ cartCount }}</span>
       </button>
@@ -41,19 +44,16 @@
         <h3>{{ course.title }}</h3>
         <p class="course-subtitle">{{ course.subtitle }}</p>
         <div class="course-meta">{{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
-        <!--<div class="course-meta">{{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
-        <div class="lessons-list">
-          <div v-for="(l,idx) in course.lessons" :key="idx">
-            <span :class="['lesson-dot', l.access ? 'lesson-access' : 'lesson-locked']"></span>
-            {{ idx+1 }}. {{ l.title }}
-          </div>
-        </div>
-        -->
         <div class="card-footer">
           <div class="price">£{{ course.price.toFixed(2) }}</div>
           <div class="card-buttons">
             <button @click="preview(course)" class="btn-secondary">Preview</button>
-            <button @click="addToCart(course)" class="btn-primary">Add</button>
+            <button 
+              @click="addToCart(course)" 
+              class="btn-primary"
+              :disabled="course.spaces <= 1" >
+              {{ course.spaces <= 1 ? 'Sold Out' : 'Add' }}
+            </button>
           </div>
         </div>
       </article>
@@ -101,7 +101,12 @@
         <img :src="previewCourse.preview" alt="preview image">
       </div>
       <p>{{ previewCourse.projectOutcome }}</p>
-      <button @click="addToCart(previewCourse)" class="btn-primary btn-full">Add to Cart</button>
+      <button 
+        @click="addToCart(previewCourse)" 
+        class="btn-primary btn-full"
+        :disabled="previewCourse.spaces <= 1" >
+        {{ previewCourse.spaces <= 1 ? 'Sold Out' : 'Add to Cart' }}
+      </button>
     </div>
   </div>
 
