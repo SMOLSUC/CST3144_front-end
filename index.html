@@ -44,7 +44,7 @@
         </div>
         <h3>{{ course.title }}</h3>
         <p class="course-subtitle">{{ course.subtitle }}</p>
-        <div class="course-meta">{{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
+        <div class="course-meta">{{ course.subject }} • {{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
         <div class="card-footer">
           <div class="price">£{{ course.price.toFixed(2) }}</div>
           <div class="card-buttons">
@@ -86,7 +86,7 @@
             <label for="sort-by-select">Attribute:</label>
             <select v-model="sortBy" id="sort-by-select" class="sort-select">
               <option value="">Default (ID)</option>
-              <option value="title">Subject</option>
+              <option value="subject">Subject</option>
               <option value="subtitle">Location</option>
               <option value="price">Price</option>
               <option value="spaces">Availability (Spaces)</option>
@@ -220,7 +220,7 @@ createApp({
         courses.value = data.map(lesson => ({
           id: lesson._id,
           title: lesson.topic,
-          subject: lesson.subject,
+          subject: lesson.subject || lesson.topic,
           subtitle: `Location: ${lesson.location}`,
           price: lesson.price,
           duration: lesson.duration,
