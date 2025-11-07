@@ -52,8 +52,8 @@
             <button 
               @click="addToCart(course)" 
               class="btn-primary"
-              :disabled="course.spaces <= 1" >
-              {{ course.spaces <= 1 ? 'Sold Out' : 'Add' }}
+              :disabled="course.spaces === 0" >
+              {{ course.spaces === 0 ? 'Sold Out' : 'Add' }}
             </button>
           </div>
         </div>
