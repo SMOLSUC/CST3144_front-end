@@ -388,3 +388,40 @@ footer {
   opacity: 0.5;
 }
 
+/* Styling for the container holding the label and select box */
+.sort-control-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px; /* Space between the attribute and order rows */
+}
+
+.sort-control-group label {
+    font-weight: 500;
+    color: #333; /* Dark text for labels */
+    flex-basis: 40%; /* Give labels some space */
+    padding-right: 10px;
+}
+
+/* Styling for the actual dropdown select element */
+.sort-select {
+    flex-grow: 1; /* Allows the select box to fill the remaining space */
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none; /* Removes default browser styling for a cleaner look */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="grey" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+.sort-select:focus {
+    border-color: #007bff; /* Highlight on focus */
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
