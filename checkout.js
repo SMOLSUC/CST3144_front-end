@@ -20,7 +20,7 @@ createApp({
       };
 
       // 1️⃣ Save the order
-      const response = await fetch('http://localhost:3000/api/orders', {
+      const response = await fetch('https://cst3114-back-end.onrender.com/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newOrder)
