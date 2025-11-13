@@ -30,7 +30,7 @@ createApp({
 
       // 2️⃣ Decrement each lesson’s space by 1
       for (const item of cart.value) {
-        await fetch(`http://localhost:3000/api/lessons/${item.id}/decrement`, {
+        await fetch(`https://cst3114-back-end.onrender.com/api/lessons/${item.id}/decrement`, {
           method: 'PUT'
         });
       }
