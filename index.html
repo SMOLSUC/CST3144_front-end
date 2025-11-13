@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Learn to Code — Fun 5-Lesson Mini Courses</title>
+  <title>Botanika — Fun 5-Lesson Mini Courses</title>
+  <link rel="icon" type="image/x-icon" href="/pictures/leaf.png"> <!-- FAVICON-->
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
@@ -14,7 +15,7 @@
     <div class="logo-section">
       <div class="logo">LTG</div>
       <div>
-        <h2>Learn to Code — 5-Lesson Mini Courses</h2>
+        <h2>Botanika — 5-Lesson Mini Courses</h2>
         <p class="subtitle">Friendly, bite-sized projects — perfect for beginners.</p>
       </div>
     </div>
@@ -85,7 +86,7 @@
           <div class="sort-control-group">
             <label for="sort-by-select">Attribute:</label>
             <select v-model="sortBy" id="sort-by-select" class="sort-select">
-              <option value="">Default (ID)</option>
+              <option value=""> </option> 
               <option value="subject">Subject</option>
               <option value="subtitle">Location</option>
               <option value="price">Price</option>
@@ -215,7 +216,7 @@ createApp({
 
     const fetchCourses = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/lessons');
+        const res = await fetch('https://cst3114-back-end.onrender.com/api/lessons');
         const data = await res.json();
         courses.value = data.map(lesson => ({
           id: lesson._id,
