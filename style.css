@@ -172,7 +172,9 @@ body {
 .btn-full { width:100%; }
 
 .featured-item {
-  display:flex; gap:10px; align-items:center;
+  display: flex; 
+  align-items: center;
+  margin-bottom: 15px; 
 }
 
 .featured-item img {
@@ -180,7 +182,12 @@ body {
   height: 70px;
   object-fit: cover;
   border-radius: 50%;
-  margin-right: 15px;
+  flex-shrink: 0; 
+  margin-right: 15px; 
+}
+
+.featured-item > div {
+  flex-grow: 1; 
 }
 
 .featured-title { font-weight:bold; }
