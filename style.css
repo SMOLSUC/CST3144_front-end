@@ -175,6 +175,14 @@ body {
   display:flex; gap:10px; align-items:center;
 }
 
+.featured-item img {
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border-radius:12px;
+  margin-bottom:10px;
+}
+
 .featured-title { font-weight:bold; }
 .featured-price { font-size:0.85rem; color:#64748b; }
 
