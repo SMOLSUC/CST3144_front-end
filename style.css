@@ -181,7 +181,7 @@ body {
   width: 70px;
   height: 70px;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 10px;
   flex-shrink: 0; 
   margin-right: 15px; 
 }

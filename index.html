@@ -44,9 +44,9 @@
         <div class="card-image">
           <img :src="course.image" alt="">
         </div>
-        <h3>{{ course.title }}</h3>
+        <h3>{{ course.title }} - {{ course.subject }} </h3>
         <p class="course-subtitle">{{ course.subtitle }}</p>
-        <div class="course-meta">{{ course.subject }} • {{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
+        <div class="course-meta">{{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
         <div class="card-footer">
           <div class="price">£{{ course.price.toFixed(2) }}</div>
           <div class="card-buttons">
