@@ -40,41 +40,36 @@ createApp({
     const categories = computed(()=>[...new Set(courses.value.map(c=>c.category))]);
     const featured = computed(()=>courses.value[0]||{title:'',price:0,image:''});
     const filteredCourses = computed(()=>{
-      // 1. Apply Filtering Logic
-      let result = courses.value.filter(c=>{
-        const q=(c.title+' '+c.subtitle).toLowerCase();
-        return (!search.value||q.includes(search.value.toLowerCase()))
-          &&(!categoryFilter.value||c.category===categoryFilter.value)
-          &&(!levelFilter.value||c.level===levelFilter.value);
-      });
-      
-      // 2. Apply Sorting Logic
-      if (sortBy.value) {
-          result.sort((a, b) => {
-              let valA = a[sortBy.value];
-              let valB = b[sortBy.value];
+      let result = courses.value.filter(c => {
+              const searchableText = (c.title + ' ' + c.subtitle).toLowerCase();
               
-              // Handle string comparisons (Subject/Location)
-              if (typeof valA === 'string') {
-                  valA = valA.toLowerCase();
-                  valB = valB.toLowerCase();
-              }
-              
-              let comparison = 0;
-              if (valA > valB) {
-                  comparison = 1;
-              } else if (valA < valB) {
-                  comparison = -1;
-              }
-              
-              // Apply ascending/descending order
-              // Multiply comparison by -1 to reverse the order if 'desc' is selected
-              return sortOrder.value === 'desc' ? comparison * -1 : comparison;
+              const matchesSearch = !search.value || searchableText.includes(search.value.toLowerCase());
+              const matchesCategory = !categoryFilter.value || c.category === categoryFilter.value;
+              const matchesLevel = !levelFilter.value || c.level === levelFilter.value;
+
+              return matchesSearch && matchesCategory && matchesLevel;
           });
-      }
-      
-      return result;
+          
+          if (sortBy.value) {
+              result.sort((a, b) => {
+                  const valA = a[sortBy.value];
+                  const valB = b[sortBy.value];
+                  
+                  let comparison = 0;
+
+                  if (typeof valA === 'string') {
+                      comparison = String(valA).localeCompare(String(valB));
+                  } else {
+                      comparison = valA - valB;
+                  }
+                  
+                  return sortOrder.value === 'desc' ? comparison * -1 : comparison;
+              });
+          }
+          
+          return result;
     });
+    
     const cartCount = computed(()=>cart.value.length);
     const subtotal = computed(()=>cart.value.reduce((s,i)=>s+i.price,0));
 
