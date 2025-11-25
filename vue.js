@@ -38,10 +38,10 @@ createApp({
     onMounted(fetchCourses);
 
     const categories = computed(()=>[...new Set(courses.value.map(c=>c.category))]);
-    const featured = computed(()=>courses.value[0]||{title:'',price:0,image:''});
+    const featured = computed(()=>courses.value[0]||{title:'',price:0,image:'',subject:''});
     const filteredCourses = computed(()=>{
       let result = courses.value.filter(c => {
-              const searchableText = (c.title + ' ' + c.subtitle).toLowerCase();
+              const searchableText = (c.title + ' ' + c.subtitle + ' ' + c.subject).toLowerCase();
               
               const matchesSearch = !search.value || searchableText.includes(search.value.toLowerCase());
               const matchesCategory = !categoryFilter.value || c.category === categoryFilter.value;
@@ -80,17 +80,17 @@ createApp({
         return;
       }
 
-      // 1️⃣ Add to cart
+      //Add to cart
       cart.value.push(course);
       localStorage.setItem('cart', JSON.stringify(cart.value));
 
-      // 2️⃣ Temporarily decrease space (frontend only)
+      //Temporarily decrease space (frontend only)
       const targetCourse = courses.value.find(c => c.id === course.id);
       if (targetCourse && targetCourse.spaces > 0) {
         targetCourse.spaces -= 1;
       }
 
-      // 3️⃣ Show toast
+      //Show toast
       showToast('Added to cart');
     }
 

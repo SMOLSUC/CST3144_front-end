@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Botanika - Mini Courses</title>
+  <title>Botanika - After School Classes and Activities</title>
   <link rel="icon" type="image/x-icon" href="pictures/leaf.png"> <!-- FAVICON-->
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
@@ -16,7 +16,7 @@
     <div class="logo-section">
       <div class="logo">BTNKA</div>
       <div>
-        <h2>Botanika - Mini Courses</h2>
+        <h2>Botanika - After School Classes and Activities</h2>
         <p class="subtitle">Friendly, bite-sized projects - perfect for beginners.</p>
       </div>
     </div>
@@ -66,9 +66,9 @@
       <div class="card">
         <h4>Why these courses?</h4>
         <ul>
-          <li>Fun, short projects</li>
-          <li>No jargon, clear examples</li>
-          <li>Build something every lesson</li>
+          <li>Fun, educational courses</li>
+          <li>Highly experienced teachers</li>
+          <li>Build something, learn something every lesson</li>
         </ul>
       </div>
       <div class="card" v-if="featured">
@@ -76,7 +76,7 @@
         <div class="featured-item">
           <img :src="featured.image" alt="">
           <div>
-            <div class="featured-title">{{ featured.title }}</div>
+            <div class="featured-title">{{ featured.title }} - {{ featured.subject }}</div>
             <div class="featured-price">£{{ featured.price.toFixed(2) }}</div>
           </div>
         </div>

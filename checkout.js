@@ -19,7 +19,7 @@ createApp({
         date: new Date().toISOString()
       };
 
-      // 1️⃣ Save the order
+      //Save the order
       const response = await fetch('https://cst3114-back-end.onrender.com/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -28,14 +28,14 @@ createApp({
 
       if (!response.ok) throw new Error('Order failed');
 
-      // 2️⃣ Decrement each lesson’s space by 1
+      //Decrement each lesson’s space by 1
       for (const item of cart.value) {
         await fetch(`https://cst3114-back-end.onrender.com/api/lessons/${item.id}/decrement`, {
           method: 'PUT'
         });
       }
 
-      // 3️⃣ Clear cart + show success
+      //Clear cart + show success
       localStorage.removeItem('cart');
       submitted.value = true;
       showToast('Payment successful!');
