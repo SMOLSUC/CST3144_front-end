@@ -32,7 +32,7 @@
         <li v-for="item in cart" :key="item.id" class="checkout-item">
           <img :src="item.image" alt="Course Image">
           <div class="checkout-item-info">
-            <span class="checkout-item-title">{{ item.title }}</span>
+            <span class="checkout-item-title">{{ item.title }} - {{item.subject}}</span>
             <span class="checkout-item-price">£{{ item.price.toFixed(2) }}</span>
           </div>
         </li>
