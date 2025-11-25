@@ -121,9 +121,6 @@
         <h3>{{ previewCourse.title }}</h3>
         <button @click="previewCourse=null">✕</button>
       </div>
-      <div class="modal-image">
-        <img :src="previewCourse.preview" alt="preview image">
-      </div>
       <p>{{ previewCourse.projectOutcome }}</p>
       <button 
         @click="addToCart(previewCourse)" 
@@ -146,7 +143,7 @@
           <div class="cart-item-info">
             <img :src="item.image" alt="">
             <div>
-              <div>{{ item.title }}</div>
+              <div>{{ item.title }} - {{ item.subject }}</div>
               <div class="item-subtitle">{{ item.subtitle }}</div>
             </div>
           </div>
