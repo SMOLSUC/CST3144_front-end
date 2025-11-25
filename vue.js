@@ -89,7 +89,6 @@ createApp({
       if (targetCourse && targetCourse.spaces > 0) {
         targetCourse.spaces -= 1;
       }
-
       //Show toast
       showToast('Added to cart');
     }
@@ -103,7 +102,7 @@ createApp({
       if (targetCourse) targetCourse.spaces += 1;
     }
 
-    function checkout(){ localStorage.setItem('cart', JSON.stringify(cart.value.map(i => ({ id: i.id, title: i.title, price: i.price, image:i.image })))); window.location.href = 'checkout.html'; }
+    function checkout(){ localStorage.setItem('cart', JSON.stringify(cart.value.map(i => ({ id: i.id, title: i.title, subject: i.subject, price: i.price, image:i.image })))); window.location.href = 'checkout.html'; }
     function preview(c){previewCourse.value=c;}
     function showToast(msg){toast.value=msg; setTimeout(()=>toast.value='',1800);}
 
