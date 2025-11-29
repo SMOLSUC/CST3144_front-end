@@ -2,8 +2,6 @@ const { createApp, ref, reactive, computed, onMounted } = Vue;
 createApp({
   setup() {
     const BACKEND_URL = 'https://cst3114-back-end.onrender.com';
-    //const API_BASE_URL = `${BACKEND_URL}/api`;
-
     const search = ref('');
     const categoryFilter = ref('');
     const levelFilter = ref('');
@@ -29,7 +27,7 @@ createApp({
           duration: lesson.duration,
           level: lesson.level,
           category: 'General',
-          image: BACKEND_URL + lesson.image,
+          image: `${BACKEND_URL}/${lesson.image}`,
           preview: lesson.preview,
           projectOutcome: lesson.preview,
           spaces: lesson.space,
