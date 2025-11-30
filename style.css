@@ -84,6 +84,11 @@ body {
   gap:20px;
 }
 
+.course-list-move {
+  /* Transition the 'transform' property over 0.5 seconds */
+  transition: transform 0.5s ease;
+}
+
 .sidebar {
   flex:1;
   display:flex;

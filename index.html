@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Botanika - After School Classes and Activities</title>
-  <link rel="icon" type="image/x-icon" href="pictures/leaf.png"> <!-- FAVICON-->
+  <link rel="icon" type="image/x-icon" href="leaf.png"> <!-- FAVICON-->
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <script defer src="vue.js"></script>
@@ -40,26 +40,28 @@
   <main class="main-grid">
     
     <section class="courses-section">
-      <article v-for="course in filteredCourses" :key="course.id" class="card">
-        <div class="card-image">
-          <img :src="course.image" alt="">
-        </div>
-        <h3>{{ course.title }} - {{ course.subject }} </h3>
-        <p class="course-subtitle">{{ course.subtitle }}</p>
-        <div class="course-meta">{{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
-        <div class="card-footer">
-          <div class="price">£{{ course.price.toFixed(2) }}</div>
-          <div class="card-buttons">
-            <button @click="preview(course)" class="btn-secondary">Preview</button>
-            <button 
-              @click="addToCart(course)" 
-              class="btn-primary"
-              :disabled="course.spaces === 0" >
-              {{ course.spaces === 0 ? 'Sold Out' : 'Add' }}
-            </button>
+      <TransitionGroup name="course-list" tag="div">
+        <article v-for="course in filteredCourses" :key="course.id" class="card">
+          <div class="card-image">
+            <img :src="course.image" alt="">
           </div>
-        </div>
-      </article>
+          <h3>{{ course.title }} - {{ course.subject }} </h3>
+          <p class="course-subtitle">{{ course.subtitle }}</p>
+          <div class="course-meta">{{ course.level }} • {{ course.duration }} hrs • {{ course.spaces }} spaces</div>
+          <div class="card-footer">
+            <div class="price">£{{ course.price.toFixed(2) }}</div>
+            <div class="card-buttons">
+              <button @click="preview(course)" class="btn-secondary">Preview</button>
+              <button 
+                @click="addToCart(course)" 
+                class="btn-primary"
+                :disabled="course.spaces === 0" >
+                {{ course.spaces === 0 ? 'Sold Out' : 'Add' }}
+              </button>
+            </div>
+          </div>
+        </article>
+      </TransitionGroup>
     </section>
 
     <aside class="sidebar">
